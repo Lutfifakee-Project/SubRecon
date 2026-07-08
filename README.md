@@ -1,191 +1,73 @@
-# 🔎 SubRecon - Advanced Subdomain Enumeration Tool
+# SubRecon - Advanced Subdomain Enumeration Tool
 
-[![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0-orange.svg)](https://github.com/Lutfifakee-Project/SubRecon)
+[![Python](https://img.shields.io/badge/Python-3.7%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-1.0-orange)](https://github.com/Lutfifakee-Project/SubRecon)
 
-**SubRecon** is a fast and advanced subdomain enumeration tool designed for penetration testers, bug bounty hunters, and security researchers.
+**SubRecon** is an advanced subdomain enumeration tool with multi-source support, fast bruteforce, subdomain takeover detection, and 4 output formats.
 
-It combines multiple passive intelligence sources, high-speed brute-force enumeration, subdomain takeover detection, and professional reporting into a single lightweight tool.
+## Features
 
----
+- Multi-Source Enumeration - 5 passive sources (crt.sh, AlienVault, BufferOver, RapidDNS, CertSpotter)
+- Fast Bruteforce - 1,600+ subdomains/second with threading
+- Takeover Detection - 20+ service patterns (GitHub Pages, Heroku, AWS S3, etc.)
+- 4 Output Formats - JSON, CSV, TXT, HTML
+- Professional HTML Report - Dark mode with modern styling
+- Flexible Format Selection - Choose formats with --format
+- Auto Wordlist - Automatically loads from wordlists/common.txt
 
-# ✨ Features
+## Installation
 
-- 🔍 **Multi-Source Enumeration**
-  - crt.sh
-  - AlienVault OTX
-  - BufferOver
-  - RapidDNS
-  - CertSpotter
-
-- ⚡ **Fast Brute-force Engine**
-  - Multi-threaded scanning
-  - 1,600+ subdomains/second (hardware dependent)
-
-- 🚨 **Subdomain Takeover Detection**
-  - Detects 20+ common takeover fingerprints
-  - GitHub Pages
-  - Heroku
-  - AWS S3
-  - Azure
-  - Netlify
-  - Vercel
-  - Firebase
-  - And many more
-
-- 📊 **Multiple Output Formats**
-  - JSON
-  - CSV
-  - TXT
-  - HTML
-
-- 🎨 **Professional HTML Report**
-  - Modern dark theme
-  - Easy to read
-  - Suitable for client reports
-
-- 🎯 **Flexible Output Selection**
-  - Generate only the formats you need using `--format`
-
-- 📁 **Automatic Wordlist Loading**
-  - Loads `wordlists/common.txt` automatically
-
----
-
-# 📦 Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/Lutfifakee-Project/SubRecon.git
-```
-
-Move into the project directory:
-
-```bash
+git clone https://github.com/Lutfifakee-Project/SubRecon
 cd SubRecon
-```
-
-Install the required dependencies:
-
-```bash
 pip install -r requirements.txt
-```
 
----
+## Usage
 
-# 🚀 Usage
-
-## Basic Scan
-
-```bash
+Basic Scan (Terminal Only):
 python subrecon.py -d example.com
-```
 
----
-
-## Scan with Brute-force
-
-```bash
+Scan with Bruteforce:
 python subrecon.py -d example.com -b -o results
-```
 
----
+Full Scan with All Features:
+python subrecon.py -d example.com -b --takeover -o full_report
 
-## Full Scan
+Select Specific Output Formats:
+Only JSON:
+python subrecon.py -d example.com -o results --format json
 
-Passive enumeration + brute-force + takeover detection.
+JSON + CSV:
+python subrecon.py -d example.com -o results --format json,csv
 
-```bash
-python subrecon.py \
-    -d example.com \
-    -b \
-    --takeover \
-    -o full_report
-```
+JSON + HTML (client report):
+python subrecon.py -d example.com -o report --format json,html
 
----
+Custom Wordlist:
+python subrecon.py -d example.com -b -w wordlists/custom.txt -o results
 
-## Select Output Formats
+Large Domain with More Threads:
+python subrecon.py -d google.com -b --takeover -t 100 -o google
 
-Generate only JSON:
+## Output Formats
 
-```bash
-python subrecon.py \
-    -d example.com \
-    -o results \
-    --format json
-```
+Format: JSON
+Extension: .json
+Use Case: API integration & other tools
 
-Generate JSON + CSV:
+Format: CSV
+Extension: .csv
+Use Case: Analysis in Excel/Google Sheets
 
-```bash
-python subrecon.py \
-    -d example.com \
-    -o results \
-    --format json,csv
-```
+Format: TXT
+Extension: .txt
+Use Case: Human-readable text report
 
-Generate JSON + HTML:
+Format: HTML
+Extension: .html
+Use Case: Professional visual report (dark mode)
 
-```bash
-python subrecon.py \
-    -d example.com \
-    -o report \
-    --format json,html
-```
-
-Generate all formats:
-
-```bash
-python subrecon.py \
-    -d example.com \
-    -o report \
-    --format all
-```
-
----
-
-## Custom Wordlist
-
-```bash
-python subrecon.py \
-    -d example.com \
-    -b \
-    -w wordlists/custom.txt \
-    -o results
-```
-
----
-
-## Increase Thread Count
-
-```bash
-python subrecon.py \
-    -d google.com \
-    -b \
-    --takeover \
-    -t 100 \
-    -o google
-```
-
----
-
-# 📊 Output Formats
-
-| Format | Extension | Purpose |
-|---------|-----------|----------|
-| JSON | `.json` | API integration & automation |
-| CSV | `.csv` | Excel / Google Sheets |
-| TXT | `.txt` | Human-readable report |
-| HTML | `.html` | Professional visual report |
-
----
-
-# 📄 Example JSON Output
-
-```json
+Example JSON Output:
 {
   "domain": "example.com",
   "timestamp": "2026-07-06T13:42:44.641965",
@@ -193,10 +75,7 @@ python subrecon.py \
   "alive_subdomains": 1,
   "takeover_vulnerable": [],
   "subdomains": {
-    "all": [
-      "*.example.com",
-      "www.example.com"
-    ],
+    "all": ["*.example.com", "www.example.com"],
     "alive": {
       "www.example.com": {
         "url": "https://www.example.com",
@@ -208,93 +87,57 @@ python subrecon.py \
     }
   }
 }
-```
 
----
+## Arguments
 
-# 🛠️ Command Line Arguments
+-d, --domain : Target domain (Required)
+-o, --output : Output filename (without extension)
+-t, --threads : Number of threads (default: 50)
+-b, --bruteforce : Enable subdomain bruteforce
+-w, --wordlist : Custom wordlist (default: wordlists/common.txt)
+--takeover : Check for subdomain takeover
+-v, --verbose : Verbose output
+--format : Output formats: json,csv,txt,html or all (default: all)
 
-| Argument | Description | Default |
-|----------|-------------|---------|
-| `-d`, `--domain` | Target domain | **Required** |
-| `-o`, `--output` | Output filename (without extension) | - |
-| `-t`, `--threads` | Number of threads | `50` |
-| `-b`, `--bruteforce` | Enable brute-force | Disabled |
-| `-w`, `--wordlist` | Custom wordlist | `wordlists/common.txt` |
-| `--takeover` | Check for takeover vulnerabilities | Disabled |
-| `-v`, `--verbose` | Verbose output | Disabled |
-| `--format` | Output formats (`json,csv,txt,html` or `all`) | `all` |
+## Project Structure
 
----
-
-# 📁 Project Structure
-
-```text
 SubRecon/
-│
-├── subrecon.py
-├── requirements.txt
-├── README.md
-├── LICENSE
-│
-└── wordlists/
-    └── common.txt
-```
+├── subrecon.py          # Main script
+├── requirements.txt     # Dependencies
+├── wordlists/           # Wordlist folder
+│   └── common.txt      # Wordlist (142 entries)
+├── README.md           # Documentation
+└── LICENSE             # MIT License
 
+## Performance
+
+example.com: 7 subdomains, 1 alive, 7 seconds
+google.com: 179 subdomains, 65 alive, 73 seconds
+github.com: 100+ subdomains, 50+ alive, ~60 seconds
+
+## Data Sources
+
+This tool uses public data sources:
+- crt.sh - Certificate Transparency Logs
+- AlienVault OTX - Open Threat Exchange
+- BufferOver.run - DNS Recon
+- RapidDNS - Subdomain Database
+- CertSpotter - Certificate Monitoring
+
+## Disclaimer
+
+This tool is made for educational and authorized security testing purposes only.
+- Use only on domains you own or have permission to test.
+- The author is not responsible for any misuse of this tool.
+- Comply with all applicable laws and regulations in your jurisdiction.
+
+## Contributing
+
+Contributions are welcome! Please open an Issue or Pull Request if you have suggestions or improvements.
+
+## License
+
+MIT License - see LICENSE file for details.
 ---
 
-# ⚡ Performance
-
-| Target | Total Subdomains | Alive | Time |
-|---------|-----------------|-------|------|
-| example.com | 7 | 1 | ~7 sec |
-| google.com | 179 | 65 | ~73 sec |
-| github.com | 100+ | 50+ | ~60 sec |
-
-> **Note:** Results depend on network quality, target size, and thread count.
-
----
-
-# 🌐 Passive Data Sources
-
-SubRecon collects subdomains from publicly available intelligence sources:
-
-- crt.sh
-- AlienVault OTX
-- BufferOver.run
-- RapidDNS
-- CertSpotter
-
----
-
-# ⚠️ Disclaimer
-
-This project is intended **only for educational purposes and authorized security testing**.
-
-- Only scan domains that you own or have explicit permission to test.
-- Do not use this tool for unauthorized activities.
-- The author assumes no responsibility for misuse or damage caused by this software.
-- Always comply with applicable laws and regulations in your jurisdiction.
-
----
-
-# 🤝 Contributing
-
-Contributions are welcome!
-
-If you have ideas, improvements, or bug fixes:
-
-1. Fork the repository.
-2. Create a new branch.
-3. Commit your changes.
-4. Open a Pull Request.
-
-Issues and feature requests are also appreciated.
-
----
-
-# 📜 License
-
-This project is licensed under the **MIT License**.
-
-See the [LICENSE](LICENSE) file for more information.
+Don't forget to star this project if you find it useful!
